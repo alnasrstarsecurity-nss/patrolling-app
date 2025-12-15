@@ -35,39 +35,68 @@ function toBase64(file) {
 }
 
 async function submitVisit() {
-  status.innerText = "Submitting...";
 
-  const files = photos.files;
-  if (files.length > 5) {
-    alert("Max 5 photos");
-    return;
-  }
+  const statusEl = document.getElementById("status");
+  statusEl.style.color = "black";
+  statusEl.innerText = "Submitting...";
 
-  const photos64 = [];
-  for (let f of files) photos64.push(await toBase64(f));
+  try {
+    if (!location.value) {
+      alert("Please select location");
+      return;
+    }
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify({
+    if (photos.files.length > 5) {
+      alert("Maximum 5 photos allowed");
+      return;
+    }
+
+    const photos64 = [];
+    for (let f of photos.files) {
+      photos64.push(await toBase64(f));
+    }
+
+    const payload = {
       action: "submit",
       username: localStorage.getItem("user"),
       password: localStorage.getItem("pass"),
       location: location.value,
       checklist: [...document.querySelectorAll(".chk:checked")].map(c => c.value),
       remarks: remarks.value,
-      lat, lng,
+      lat: lat || "",
+      lng: lng || "",
       photos: photos64,
       signature: canvas.toDataURL(),
       syncStatus: navigator.onLine ? "ONLINE" : "OFFLINE"
-    })
-  })
-  .then(r => r.json())
-  .then(res => {
-    if (res.status === "success") {
-      status.innerText = "✅ Submitted successfully";
+    };
+
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      statusEl.style.color = "green";
+      statusEl.innerText = "✅ Submitted successfully";
+
+      resetForm();
+
+      // OPTIONAL: auto-clear message after 2 seconds
+      setTimeout(() => {
+        statusEl.innerText = "";
+      }, 2000);
+
     } else {
-      status.innerText = "❌ Submit failed";
+      statusEl.style.color = "red";
+      statusEl.innerText = "❌ Submission failed";
     }
-  })
-  .catch(() => status.innerText = "❌ Network error");
+
+  } catch (err) {
+    console.error(err);
+    statusEl.style.color = "red";
+    statusEl.innerText = "❌ Network error";
+  }
 }
