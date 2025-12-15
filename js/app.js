@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw17azLcfbqaImIkUi56LIXgpfON97KEuNijGy75eIS_D8AfNbbXuyfTc7DsHv84x_MlA/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzl3ittsKvrL6VyBIeBbUQXsvcsBmsl4ex4-lU6VyOqh6NGiWmvyR7phnlKHjb7C-aWgA/exec";
 
 let lat="", lng="";
 
@@ -8,17 +8,22 @@ navigator.geolocation.getCurrentPosition(p=>{
 });
 
 /* LOAD LOCATIONS */
-fetch(SCRIPT_URL,{
-  method:"POST",
-  body:JSON.stringify({action:"locations"})
-})
-.then(r=>r.json())
-.then(d=>{
-  location.innerHTML="<option value=''>Select Location</option>";
-  d.locations.forEach(l=>{
-    location.innerHTML+=`<option>${l}</option>`;
+fetch(SCRIPT_URL + "?action=locations")
+  .then(r => r.json())
+  .then(d => {
+    const loc = document.getElementById("location");
+    loc.innerHTML = "<option value=''>Select Location</option>";
+
+    d.locations.forEach(l => {
+      const o = document.createElement("option");
+      o.textContent = l;
+      o.value = l;
+      loc.appendChild(o);
+    });
+  })
+  .catch(() => {
+    alert("Failed to load locations");
   });
-});
 
 /* SIGNATURE */
 const canvas=document.getElementById("sign");
