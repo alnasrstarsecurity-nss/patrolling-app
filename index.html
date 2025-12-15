@@ -43,7 +43,7 @@ function login() {
     if (res.status === "success") {
       localStorage.setItem("user", user.value);
       localStorage.setItem("pass", pass.value);
-      location.href = "form.html";
+      location.href = "menu.html";
     } else {
       msg.innerText = "❌ Wrong username or password";
       msg.classList.add("error");
