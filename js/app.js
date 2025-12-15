@@ -37,30 +37,37 @@ function toBase64(file) {
 async function submitVisit() {
 
   const statusEl = document.getElementById("status");
+  const locationEl = document.getElementById("locationSelect");
+
   statusEl.style.color = "black";
   statusEl.innerText = "Submitting...";
 
   try {
-    if (!location.value) {
+    /* VALIDATION */
+    if (!locationEl.value) {
       alert("Please select location");
+      statusEl.innerText = "";
       return;
     }
 
     if (photos.files.length > 5) {
       alert("Maximum 5 photos allowed");
+      statusEl.innerText = "";
       return;
     }
 
+    /* PHOTOS */
     const photos64 = [];
     for (let f of photos.files) {
       photos64.push(await toBase64(f));
     }
 
+    /* PAYLOAD */
     const payload = {
       action: "submit",
       username: localStorage.getItem("user"),
       password: localStorage.getItem("pass"),
-      location: location.value,
+      location: locationEl.value,   // ✅ FIXED
       checklist: [...document.querySelectorAll(".chk:checked")].map(c => c.value),
       remarks: remarks.value,
       lat: lat || "",
@@ -81,14 +88,7 @@ async function submitVisit() {
     if (result.status === "success") {
       statusEl.style.color = "green";
       statusEl.innerText = "✅ Submitted successfully";
-
       resetForm();
-
-      // OPTIONAL: auto-clear message after 2 seconds
-      setTimeout(() => {
-        statusEl.innerText = "";
-      }, 2000);
-
     } else {
       statusEl.style.color = "red";
       statusEl.innerText = "❌ Submission failed";
@@ -101,10 +101,12 @@ async function submitVisit() {
   }
 }
 
+
 function resetForm() {
-  document.getElementById("location").selectedIndex = 0;
-  document.getElementById("remarks").value = "";
+  document.getElementById("locationSelect").selectedIndex = 0;
+  remarks.value = "";
   document.querySelectorAll(".chk").forEach(c => c.checked = false);
-  document.getElementById("photos").value = "";
+  photos.value = "";
   clearSign();
 }
+
