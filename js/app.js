@@ -2,6 +2,12 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw5I4eQnpUrAmsQgqPjE
 
 let lat = "", lng = "";
 
+
+if (!localStorage.getItem("user") || !localStorage.getItem("pass")) {
+  window.location.href = "index.html";
+}
+
+
 /* GPS */
 navigator.geolocation.getCurrentPosition(p => {
   lat = p.coords.latitude;
