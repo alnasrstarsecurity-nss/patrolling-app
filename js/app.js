@@ -17,19 +17,68 @@ navigator.geolocation.getCurrentPosition(p => {
 /* SIGNATURE */
 const canvas = document.getElementById("sign");
 const ctx = canvas.getContext("2d");
-let draw = false;
 
-canvas.onmousedown = () => draw = true;
-canvas.onmouseup = () => { draw = false; ctx.beginPath(); };
-canvas.onmousemove = e => {
-  if (!draw) return;
-  ctx.lineTo(e.offsetX, e.offsetY);
+ctx.lineWidth = 2;
+ctx.lineCap = "round";
+
+let drawing = false;
+
+/* ----------- POSITION ----------- */
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+
+  if (e.touches) {
+    return {
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    };
+  } else {
+    return {
+      x: e.offsetX,
+      y: e.offsetY
+    };
+  }
+}
+
+/* ----------- START ----------- */
+function startDraw(e) {
+  e.preventDefault();
+  drawing = true;
+  const pos = getPos(e);
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
+}
+
+/* ----------- DRAW ----------- */
+function draw(e) {
+  if (!drawing) return;
+  e.preventDefault();
+  const pos = getPos(e);
+  ctx.lineTo(pos.x, pos.y);
   ctx.stroke();
-};
+}
 
+/* ----------- END ----------- */
+function endDraw(e) {
+  e.preventDefault();
+  drawing = false;
+}
+
+/* ----------- EVENTS ----------- */
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", endDraw);
+canvas.addEventListener("mouseleave", endDraw);
+
+canvas.addEventListener("touchstart", startDraw, { passive: false });
+canvas.addEventListener("touchmove", draw, { passive: false });
+canvas.addEventListener("touchend", endDraw);
+
+/* ----------- CLEAR ----------- */
 function clearSign() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
 
 /* FILE → BASE64 */
 function toBase64(file) {
