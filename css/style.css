@@ -113,9 +113,8 @@ button.secondary {
 }
 
 /* logo */
-  .logo {
-          
-            text-align: center;
-            width: 120px;
-            margin-bottom: 15px;
-  }
+ .logo {
+    display: block;          /* makes image behave like a block */
+    margin: 20px auto;       /* auto left & right centers it */
+    width: 120px;            /* adjust size */
+}
