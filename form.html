@@ -1,57 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Patrol Visit</title>
-
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="form-container">
-    <h2>Patrol Visit</h2>
+<h3>Patrol Visit</h3>
 
-    <!-- Location -->
-    <select id="location"></select>
+<select id="location"></select>
 
+<label><input type="checkbox" class="chk" value="Clean"> Clean</label>
+<label><input type="checkbox" class="chk" value="Secure"> Secure</label>
 
-    <!-- Checklist -->
-    <label>Checklist</label>
-    <div class="checklist">
-      <label>
-        <input type="checkbox" class="chk" value="Clean">
-        Clean
-      </label>
-      <label>
-        <input type="checkbox" class="chk" value="Secure">
-        Secure
-      </label>
-    </div>
+<textarea id="remarks" placeholder="Remarks"></textarea>
 
-    <!-- Remarks -->
-    <label>Remarks</label>
-    <textarea id="remarks" placeholder="Enter remarks"></textarea>
+<input type="file" id="photos" accept="image/*" capture="environment" multiple>
 
-    <!-- Photos -->
-    <label>Upload Photos</label>
-    <input type="file" id="photos" accept="image/*" capture="environment" multiple>
+<h4>Signature</h4>
+<canvas id="sign" width="300" height="150"></canvas>
+<button onclick="clearSign()">Clear</button>
 
-    <!-- Signature -->
-    <label>Signature</label>
-    <canvas id="sign" width="300" height="150"></canvas>
+<button onclick="submitVisit()">Submit</button>
+<p id="status"></p>
 
-    <button type="button" class="secondary" onclick="clearSign()">Clear Signature</button>
-
-    <!-- Submit -->
-    <button onclick="submitVisit()">Submit Visit</button>
-
-    <p id="status" class="message"></p>
-  </div>
-
-  <script src="js/app.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
