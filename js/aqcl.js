@@ -1,148 +1,113 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydAeCCsW7MGoa0zur8Uawu3ivJG-jpB4Le6HDaGEqxzLEEL1znrEhIpmT-4_EGIRpqRA/exec";
 
-document.getElementById("aqclForm").addEventListener("submit", submitAQCL);
 
+const form = document.getElementById("aqclForm");
+const status = document.getElementById("status");
+
+/* ---------- RADIO HELPER ---------- */
 function radio(name) {
   const r = document.querySelector(`input[name="${name}"]:checked`);
   return r ? r.value : "";
 }
 
-function yn(id) {
-  return document.getElementById(id).checked ? "YES" : "NO";
-}
-
+/* ---------- SIGNATURE ---------- */
 const canvas = document.getElementById("sign");
 const ctx = canvas.getContext("2d");
-
-ctx.lineWidth = 2;
+ctx.lineWidth = 2.5;
 ctx.lineCap = "round";
 
 let drawing = false;
 
 function resizeCanvas() {
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width;
-  canvas.height = rect.height;
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width;
+  canvas.height = r.height;
 }
-
-window.addEventListener("load", resizeCanvas);
+resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-function getPos(e) {
-  const rect = canvas.getBoundingClientRect();
-
+function pos(e) {
+  const r = canvas.getBoundingClientRect();
   if (e.touches) {
     return {
-      x: e.touches[0].clientX - rect.left,
-      y: e.touches[0].clientY - rect.top
+      x: e.touches[0].clientX - r.left,
+      y: e.touches[0].clientY - r.top
     };
   }
   return { x: e.offsetX, y: e.offsetY };
 }
 
-function startDraw(e) {
+function start(e) {
   e.preventDefault();
   drawing = true;
-  const pos = getPos(e);
+  const p = pos(e);
   ctx.beginPath();
-  ctx.moveTo(pos.x, pos.y);
+  ctx.moveTo(p.x, p.y);
 }
 
-function draw(e) {
+function move(e) {
   if (!drawing) return;
   e.preventDefault();
-  const pos = getPos(e);
-  ctx.lineTo(pos.x, pos.y);
+  const p = pos(e);
+  ctx.lineTo(p.x, p.y);
   ctx.stroke();
 }
 
-function endDraw(e) {
+function end(e) {
   e.preventDefault();
   drawing = false;
 }
 
-canvas.addEventListener("mousedown", startDraw);
-canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("mouseup", endDraw);
-canvas.addEventListener("mouseleave", endDraw);
+canvas.addEventListener("mousedown", start);
+canvas.addEventListener("mousemove", move);
+canvas.addEventListener("mouseup", end);
+canvas.addEventListener("mouseleave", end);
 
-canvas.addEventListener("touchstart", startDraw, { passive: false });
-canvas.addEventListener("touchmove", draw, { passive: false });
-canvas.addEventListener("touchend", endDraw);
+canvas.addEventListener("touchstart", start, { passive: false });
+canvas.addEventListener("touchmove", move, { passive: false });
+canvas.addEventListener("touchend", end);
 
-function clearSign() {
+function clearSignature() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-
-
-/* FILE → BASE64 */
-function toBase64(file) {
-  return new Promise(res => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.readAsDataURL(file);
-  });
-}
-
-
-function submitAQCL(e) {
+/* ---------- SUBMIT ---------- */
+form.addEventListener("submit", e => {
   e.preventDefault();
 
-  document.getElementById("status").innerText = "Submitting...";
+  status.innerText = "Submitting...";
+  status.style.color = "blue";
 
-  const data = {
+  const payload = {
     action: "aqcl",
-    username: localStorage.user,
-    password: localStorage.pass,
-    accommodation: accName.value,
+    user: localStorage.getItem("user"),
+    accName: accName.value,
     guardPosition: radio("guardPosition"),
-    numGuards: numGuards.value,
-    guardAppearance: guardAppearance.value,
-    deskAppearance: deskAppearance.value,
-    guardContact: guardContact.value,
-    walkPatrol: radio("walkPatrol"),
-    patrolEffective: radio("patrolEffective"),
-    changesMade: changesMade.value,
-    qrCheck: radio("qrCheck"),
-    lastVisit: lastVisit.value,
-    supervisorName: supervisorName.value,
-    supervisors7: supervisors7.value,
-    keyCabinet: yn("keyCabinet"),
-    keyLog: yn("keyLog"),
-    keysAudited: keysAudited.value,
-    camerasWorking: yn("camerasWorking"),
-    numCameras: numCameras.value,
-    acs: acs.value,
-    perimeter: perimeter.value,
-    apartmentInspection: apartmentInspection.value,
-    apartmentRemark: apartmentRemark.value,
-    actionsTaken: actionsTaken.value,
-    guard1cag: `Communication:${radio("g1_comm")} | Awareness:${radio("g1_aware")} | Grooming:${radio("g1_groom")}`,
-    guard2cag: `Communication:${radio("g2_comm")} | Awareness:${radio("g2_aware")} | Grooming:${radio("g2_groom")}`,
-    patrollingSupervisor: patrollingSupervisor.value,
-    serial: serial.value,
-    buildingSecurity: buildingSecurity.value,
-    securityStaffNumber: securityStaffNumber.value,
-    landline: landline.value,
-    dutyMobile: dutyMobile.value,
-    signature: sign.toDataURL()
+    guard1cag: `Comm:${radio("g1_comm")} | Aware:${radio("g1_aware")} | Groom:${radio("g1_groom")}`,
+    signature: canvas.toDataURL()
   };
 
   fetch(SCRIPT_URL, {
     method: "POST",
-    body: JSON.stringify(data)
+    body: JSON.stringify(payload)
   })
   .then(r => r.json())
   .then(res => {
     if (res.status === "success") {
-      status.innerText = "✅ Submitted Successfully";
-      document.getElementById("aqclForm").reset();
-      clearSign();
-      setTimeout(() => status.innerText = "", 2000);
+      status.innerText = "✅ Submitted successfully";
+      status.style.color = "green";
+
+      form.reset();
+      clearSignature();
+
+      setTimeout(() => status.innerText = "", 3000);
     } else {
-      status.innerText = "❌ " + res.message;
+      status.innerText = "❌ Submission failed";
+      status.style.color = "red";
     }
   })
-  .catch(() => status.innerText = "❌ Network error");
-}
+  .catch(() => {
+    status.innerText = "❌ Network error";
+    status.style.color = "red";
+  });
+});
