@@ -120,9 +120,49 @@ button.secondary {
     width: 120px;            /* adjust size */
 }
 
+/* Headings */
+.section {
+  margin: 20px 0;
+  padding: 15px;
+  border-left: 4px solid #1e88e5;
+  background: #f9fbff;
+}
+
+.section h3 {
+  margin: 0 0 10px;
+  font-weight: 600;
+  color: #1e88e5;
+}
+
+/* YES / NO inline */
+.yesno {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .yesno label {
-  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
 }
-.cag-group label {
-  margin-right: 10px;
+
+/* CAG inline */
+.cag-line {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 8px;
 }
+
+/* Signature */
+#sign {
+  width: 100%;
+  height: 160px;
+  border: 2px solid #333;
+  border-radius: 4px;
+  touch-action: none;
+}
+
