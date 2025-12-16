@@ -17,20 +17,19 @@
 
   <div class="form-container">
     <h2>Accomodation Quality Check List</h2>
+    <hr>
     <form id="aqclForm">
 
-    <label>Accommodation Name</label>
+    <!-- ACCOMMODATION -->
+<label>Accommodation Name</label>
 <input type="text" id="accName" required>
 
-<label>Serial Number</label>
-<input type="text" id="serial">
-
-<label>Building Security Name</label>
-<input type="text" id="buildingSecurity">
-
-<!-- GUARD -->
+<!-- YES / NO TEMPLATE -->
 <label>Guard in Position</label>
-<input type="checkbox" id="guardPosition">
+<div class="yesno">
+  <label><input type="radio" name="guardPosition" value="YES"> YES</label>
+  <label><input type="radio" name="guardPosition" value="NO"> NO</label>
+</div>
 
 <label>Number of Guards</label>
 <input type="number" id="numGuards">
@@ -38,98 +37,90 @@
 <label>Appearance of Guard</label>
 <textarea id="guardAppearance"></textarea>
 
-<label>Desk Appearance</label>
+<label>Appearance of Desk / Work Area</label>
 <textarea id="deskAppearance"></textarea>
 
 <label>Guard Contact Number</label>
 <input type="tel" id="guardContact">
 
-<label>Security Staff Number</label>
-<input type="number" id="securityStaffNumber">
-
-<!-- PATROL -->
+<!-- WALK PATROL -->
 <label>Walk Patrol with Guard</label>
-<input type="checkbox" id="walkPatrol">
+<div class="yesno">
+  <label><input type="radio" name="walkPatrol" value="YES"> YES</label>
+  <label><input type="radio" name="walkPatrol" value="NO"> NO</label>
+</div>
 
 <label>Patrol Effective</label>
-<input type="checkbox" id="patrolEffective">
+<div class="yesno">
+  <label><input type="radio" name="patrolEffective" value="YES"> YES</label>
+  <label><input type="radio" name="patrolEffective" value="NO"> NO</label>
+</div>
 
 <label>Changes Made</label>
 <textarea id="changesMade"></textarea>
 
-<!-- SUPERVISION -->
+<!-- QR -->
 <label>QR ID Card Check</label>
-<input type="checkbox" id="qrCheck">
+<div class="yesno">
+  <label><input type="radio" name="qrCheck" value="YES"> YES</label>
+  <label><input type="radio" name="qrCheck" value="NO"> NO</label>
+</div>
 
-<label>Supervisor Last Visit</label>
-<input type="date" id="lastVisit">
+<!-- CAG GUARD 1 -->
+<h3>Guard 1 – Quality Check</h3>
 
-<label>Supervisor Name</label>
-<input type="text" id="supervisorName">
+<div class="cag-group">
+  Communication:
+  <label><input type="radio" name="g1_comm" value="A">A</label>
+  <label><input type="radio" name="g1_comm" value="B">B</label>
+  <label><input type="radio" name="g1_comm" value="C">C</label>
+</div>
 
-<label>Supervisors Visited (Last 7 Days)</label>
-<input type="number" id="supervisors7">
+<div class="cag-group">
+  Awareness:
+  <label><input type="radio" name="g1_aware" value="A">A</label>
+  <label><input type="radio" name="g1_aware" value="B">B</label>
+  <label><input type="radio" name="g1_aware" value="C">C</label>
+</div>
 
-<label>Patrolling Supervisor</label>
-<input type="text" id="patrollingSupervisor">
+<div class="cag-group">
+  Grooming:
+  <label><input type="radio" name="g1_groom" value="A">A</label>
+  <label><input type="radio" name="g1_groom" value="B">B</label>
+  <label><input type="radio" name="g1_groom" value="C">C</label>
+</div>
 
-<!-- KEYS -->
-<label>Key Cabinet Locked</label>
-<input type="checkbox" id="keyCabinet">
+<!-- CAG GUARD 2 -->
+<h3>Guard 2 – Quality Check</h3>
 
-<label>Key Log</label>
-<input type="checkbox" id="keyLog">
+<div class="cag-group">
+  Communication:
+  <label><input type="radio" name="g2_comm" value="A">A</label>
+  <label><input type="radio" name="g2_comm" value="B">B</label>
+  <label><input type="radio" name="g2_comm" value="C">C</label>
+</div>
 
-<label>List Keys Audited</label>
-<textarea id="keysAudited"></textarea>
+<div class="cag-group">
+  Awareness:
+  <label><input type="radio" name="g2_aware" value="A">A</label>
+  <label><input type="radio" name="g2_aware" value="B">B</label>
+  <label><input type="radio" name="g2_aware" value="C">C</label>
+</div>
 
-<!-- CCTV -->
-<label>Cameras Working</label>
-<input type="checkbox" id="camerasWorking">
-
-<label>Number of Cameras</label>
-<input type="number" id="numCameras">
-
-<label>ACS Functional</label>
-<input type="text" id="acs">
-
-<label>Perimeter Secure</label>
-<input type="text" id="perimeter">
-
-<!-- APARTMENT -->
-<label>Apartment Inspection</label>
-<input type="text" id="apartmentInspection">
-
-<label>Apartment Remark</label>
-<textarea id="apartmentRemark"></textarea>
-
-<!-- ACTION -->
-<label>Actions Taken</label>
-<textarea id="actionsTaken"></textarea>
-
-<!-- CAG -->
-<label>Guard 1 CAG</label>
-<textarea id="guard1cag"></textarea>
-
-<label>Guard 2 CAG</label>
-<textarea id="guard2cag"></textarea>
-
-<!-- CONTACT -->
-<label>Building Landline Number</label>
-<input type="number" id="landline">
-
-<label>Security Duty Mobile Number</label>
-<input type="number" id="dutyMobile">
+<div class="cag-group">
+  Grooming:
+  <label><input type="radio" name="g2_groom" value="A">A</label>
+  <label><input type="radio" name="g2_groom" value="B">B</label>
+  <label><input type="radio" name="g2_groom" value="C">C</label>
+</div>
 
 <!-- SIGNATURE -->
 <label>Signature</label>
-<canvas id="sign" height="160"></canvas>
+<canvas id="sign"></canvas>
 <button type="button" onclick="clearSign()">Clear Signature</button>
 
 <br><br>
-
 <button type="submit">Submit AQCL</button>
-
 <p id="status"></p>
     
   </div>
