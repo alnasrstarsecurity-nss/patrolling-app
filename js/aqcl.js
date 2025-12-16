@@ -132,3 +132,20 @@ form.addEventListener("submit", e => {
     status.style.color = "red";
   });
 });
+
+function radio(name) {
+  const r = document.querySelector(`input[name="${name}"]:checked`);
+  return r ? r.value : "";
+}
+
+const guard1CAG = [
+  radio("g1_comm"),
+  radio("g1_awar"),
+  radio("g1_groom")
+].filter(Boolean).join(" ");
+
+const guard2CAG = [
+  radio("g2_comm"),
+  radio("g2_awar"),
+  radio("g2_groom")
+].filter(Boolean).join(" ");
