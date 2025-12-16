@@ -204,3 +204,36 @@ canvas {
   font-weight: bold;
   margin-top: 10px;
 }
+
+
+.radio-row {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 6px;
+}
+
+.radio-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.radio-box input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #1976d2;
+  border-radius: 3px;
+  position: relative;
+}
+
+.radio-box input:checked::after {
+  content: "✔";
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  font-size: 14px;
+  color: #1976d2;
+}
