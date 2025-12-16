@@ -1,132 +1,115 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Accomodation Quality Check List</title>
+<meta charset="UTF-8">
+<title>AQCL</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/auth.js"></script>
-  <script src="js/aqcl.js" defer></script>
+<style>
+body { font-family: Arial, sans-serif; }
+
+.section {
+  margin: 18px 0;
+  padding: 12px;
+  background: #f6f8fc;
+  border-left: 4px solid #1976d2;
+}
+
+.section h3 {
+  margin: 0 0 10px;
+  color: #1976d2;
+}
+
+.yesno, .cag-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 6px 0;
+}
+
+.yesno label, .cag-line label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+canvas {
+  width: 100%;
+  height: 160px;
+  border: 2px solid #000;
+  touch-action: none;
+}
+
+button {
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+}
+
+#status {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+</style>
 </head>
-<body onload="requireLogin()">
 
-  <div class="form-container">
-    <h2>Accomodation Quality Check List</h2>
-    <hr>
-    <form id="aqclForm">
+<body>
 
-    <!-- ACCOMMODATION -->
+<h2>Accommodation Quality Check List</h2>
+
+<form id="aqclForm">
+
+<div class="section">
 <label>Accommodation Name</label>
 <input type="text" id="accName" required>
+</div>
 
-<!-- YES / NO TEMPLATE -->
+<div class="section">
 <label>Guard in Position</label>
 <div class="yesno">
   <label><input type="radio" name="guardPosition" value="YES"> YES</label>
   <label><input type="radio" name="guardPosition" value="NO"> NO</label>
 </div>
-
-<label>Number of Guards</label>
-<input type="number" id="numGuards">
-
-<label>Appearance of Guard</label>
-<textarea id="guardAppearance"></textarea>
-
-<label>Appearance of Desk / Work Area</label>
-<textarea id="deskAppearance"></textarea>
-
-<label>Guard Contact Number</label>
-<input type="tel" id="guardContact">
-
-<!-- WALK PATROL -->
-<label>Walk Patrol with Guard</label>
-<div class="yesno">
-  <label><input type="radio" name="walkPatrol" value="YES"> YES</label>
-  <label><input type="radio" name="walkPatrol" value="NO"> NO</label>
 </div>
 
-<label>Patrol Effective</label>
-<div class="yesno">
-  <label><input type="radio" name="patrolEffective" value="YES"> YES</label>
-  <label><input type="radio" name="patrolEffective" value="NO"> NO</label>
-</div>
-
-<label>Changes Made</label>
-<textarea id="changesMade"></textarea>
-
-<!-- QR -->
-<label>QR ID Card Check</label>
-<div class="yesno">
-  <label><input type="radio" name="qrCheck" value="YES"> YES</label>
-  <label><input type="radio" name="qrCheck" value="NO"> NO</label>
-</div>
-
-<!-- CAG GUARD 1 -->
 <div class="section">
 <h3>Guard 1 – Quality Check</h3>
 
 <div class="cag-line">
-  <strong>Communication:</strong>
-  <label><input type="radio" name="g1_comm" value="A">A</label>
-  <label><input type="radio" name="g1_comm" value="B">B</label>
-  <label><input type="radio" name="g1_comm" value="C">C</label>
+<strong>Communication</strong>
+<label><input type="radio" name="g1_comm" value="A">A</label>
+<label><input type="radio" name="g1_comm" value="B">B</label>
+<label><input type="radio" name="g1_comm" value="C">C</label>
 </div>
 
 <div class="cag-line">
-  <strong>Awareness:</strong>
-  <label><input type="radio" name="g1_aware" value="A">A</label>
-  <label><input type="radio" name="g1_aware" value="B">B</label>
-  <label><input type="radio" name="g1_aware" value="C">C</label>
+<strong>Awareness</strong>
+<label><input type="radio" name="g1_aware" value="A">A</label>
+<label><input type="radio" name="g1_aware" value="B">B</label>
+<label><input type="radio" name="g1_aware" value="C">C</label>
 </div>
 
 <div class="cag-line">
-  <strong>Grooming:</strong>
-  <label><input type="radio" name="g1_groom" value="A">A</label>
-  <label><input type="radio" name="g1_groom" value="B">B</label>
-  <label><input type="radio" name="g1_groom" value="C">C</label>
+<strong>Grooming</strong>
+<label><input type="radio" name="g1_groom" value="A">A</label>
+<label><input type="radio" name="g1_groom" value="B">B</label>
+<label><input type="radio" name="g1_groom" value="C">C</label>
 </div>
-  </div>
+</div>
 
-<!-- CAG GUARD 2 -->
 <div class="section">
-<h3>Guard 2 – Quality Check</h3>
-
-<div class="cag-line">
-  Communication:
-  <label><input type="radio" name="g2_comm" value="A">A</label>
-  <label><input type="radio" name="g2_comm" value="B">B</label>
-  <label><input type="radio" name="g2_comm" value="C">C</label>
-</div>
-  
-<div class="cag-line">
-  Awareness:
-  <label><input type="radio" name="g2_aware" value="A">A</label>
-  <label><input type="radio" name="g2_aware" value="B">B</label>
-  <label><input type="radio" name="g2_aware" value="C">C</label>
-</div>
-  
-<div class="cag-line">
-  Grooming:
-  <label><input type="radio" name="g2_groom" value="A">A</label>
-  <label><input type="radio" name="g2_groom" value="B">B</label>
-  <label><input type="radio" name="g2_groom" value="C">C</label>
-</div>
-  </div>
-
-<!-- SIGNATURE -->
 <label>Signature</label>
 <canvas id="sign"></canvas>
-<button type="button" onclick="clearSign()">Clear Signature</button>
+<button type="button" onclick="clearSignature()">Clear Signature</button>
+</div>
 
-<br><br>
 <button type="submit">Submit AQCL</button>
-<p id="status"></p>
-    
-  </div>
+<div id="status"></div>
+
+</form>
+
+<script src="js/aqcl.js"></script>
 </body>
 </html>
