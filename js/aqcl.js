@@ -9,7 +9,7 @@ if (localStorage.getItem("loggedIn") !== "YES") {
 /* ===============================
    CONFIG
 ================================ */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySz_zEmHWGqIzSltcYVynF6AG3Tjtlf6PGOeHMBiMJrY1TbSob9VusrNYgWyigFERDEg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7TiikH0aSbAcXgPak6iBFkB2GJTTP24cQZyVX2mb472siK4hfj0KTASZexrduAby33A/exec";
 
 const form = document.getElementById("aqclForm");
 const status = document.getElementById("status");
