@@ -56,11 +56,16 @@ function login() {
   })
   .then(r => r.json())
   .then(res => {
-   if (res.status === "success") {
+  if (res.status === "success") {
   localStorage.setItem("LOGGED_IN", "YES");
   localStorage.setItem("USERNAME", user.value);
-  window.location.replace("menu.html");
+
+  // 🔒 ensure storage is written before redirect
+  setTimeout(() => {
+    window.location.replace("menu.html");
+  }, 100);
 }
+
   
   else {
       msg.innerText = "❌ Wrong username or password";
