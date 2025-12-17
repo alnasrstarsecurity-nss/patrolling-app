@@ -8,6 +8,16 @@ function requireLogin() {
 }
 
 requireLogin();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const loginState = localStorage.getItem("LOGGED_IN");
+  console.log("AQCL LOGIN STATE =", loginState);
+
+  if ((loginState || "").toUpperCase() !== "YES") {
+    window.location.replace("index.html");
+  }
+});
+
 /* ===============================
    CONFIG
 ================================ */
