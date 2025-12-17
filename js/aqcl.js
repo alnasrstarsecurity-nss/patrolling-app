@@ -1,17 +1,33 @@
+/* ===============================
+   🔐 PAGE PROTECTION
+================================ */
+if (localStorage.getItem("loggedIn") !== "YES") {
+  alert("Please login first");
+  location.href = "index.html";
+}
+
+/* ===============================
+   CONFIG
+================================ */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDzSXgZER1DM-KJZl1YQTR6JbeD2Yk7s0DsQO5t7Kfx1Oo68hV0zDMvZOISKcBgv28rA/exec";
 
 const form = document.getElementById("aqclForm");
 const status = document.getElementById("status");
 
-/* ---------- RADIO HELPER ---------- */
+/* ===============================
+   RADIO HELPER
+================================ */
 function radio(name) {
   const r = document.querySelector(`input[name="${name}"]:checked`);
   return r ? r.value : "";
 }
 
-/* ---------- SIGNATURE ---------- */
+/* ===============================
+   SIGNATURE PAD (MOUSE + TOUCH)
+================================ */
 const canvas = document.getElementById("sign");
 const ctx = canvas.getContext("2d");
+
 ctx.lineWidth = 2.5;
 ctx.lineCap = "round";
 
@@ -25,7 +41,7 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-function pos(e) {
+function getPos(e) {
   const r = canvas.getBoundingClientRect();
   if (e.touches) {
     return {
@@ -33,48 +49,56 @@ function pos(e) {
       y: e.touches[0].clientY - r.top
     };
   }
-  return { x: e.offsetX, y: e.offsetY };
+  return {
+    x: e.offsetX,
+    y: e.offsetY
+  };
 }
 
-function start(e) {
+function startDraw(e) {
   e.preventDefault();
   drawing = true;
-  const p = pos(e);
+  const p = getPos(e);
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
 }
-function move(e) {
+
+function draw(e) {
   if (!drawing) return;
   e.preventDefault();
-  const p = pos(e);
+  const p = getPos(e);
   ctx.lineTo(p.x, p.y);
   ctx.stroke();
 }
-function end(e) {
+
+function endDraw(e) {
   e.preventDefault();
   drawing = false;
 }
 
-canvas.addEventListener("mousedown", start);
-canvas.addEventListener("mousemove", move);
-canvas.addEventListener("mouseup", end);
-canvas.addEventListener("mouseleave", end);
-canvas.addEventListener("touchstart", start, { passive: false });
-canvas.addEventListener("touchmove", move, { passive: false });
-canvas.addEventListener("touchend", end);
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", endDraw);
+canvas.addEventListener("mouseleave", endDraw);
+
+canvas.addEventListener("touchstart", startDraw, { passive: false });
+canvas.addEventListener("touchmove", draw, { passive: false });
+canvas.addEventListener("touchend", endDraw);
 
 function clearSignature() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-/* ---------- SUBMIT ---------- */
+/* ===============================
+   FORM SUBMISSION
+================================ */
 form.addEventListener("submit", e => {
   e.preventDefault();
 
   status.innerText = "Submitting...";
   status.style.color = "blue";
 
-  /* ---- BUILD GUARD CAG VALUES ---- */
+  /* ---- GUARD CAG COMBINATION ---- */
   const guard1CAG = [
     radio("g1_comm"),
     radio("g1_awar"),
@@ -87,8 +111,9 @@ form.addEventListener("submit", e => {
     radio("g2_groom")
   ].filter(Boolean).join(" ");
 
+  /* ---- PAYLOAD (MATCHES APPS SCRIPT 100%) ---- */
   const payload = {
-    action: "submitAQCL",   // ✅ FIXED
+    action: "submitAQCL",
 
     accName: accName.value,
     guardPosition: radio("guardPosition"),
@@ -114,8 +139,8 @@ form.addEventListener("submit", e => {
     apartmentRemark: apartmentRemark.value,
     actionsTaken: actionsTaken.value,
 
-    guard1CAG: guard1CAG,   // ✅ CORRECT
-    guard2CAG: guard2CAG,   // ✅ CORRECT
+    guard1CAG: guard1CAG,
+    guard2CAG: guard2CAG,
 
     patrollingSupervisor: patrollingSupervisor.value,
     serialNumber: serialNumber.value,
@@ -131,21 +156,29 @@ form.addEventListener("submit", e => {
     method: "POST",
     body: JSON.stringify(payload)
   })
-  .then(r => r.json())
-  .then(res => {
-    if (res.status === "success") {
-      status.innerText = "✅ Submitted Successfully";
-      status.style.color = "green";
-      form.reset();
-      clearSignature();
-      setTimeout(() => status.innerText = "", 3000);
-    } else {
-      status.innerText = "❌ Submission Failed";
+    .then(r => r.json())
+    .then(res => {
+      if (res.status === "success") {
+        status.innerText = "✅ Submitted Successfully";
+        status.style.color = "green";
+        form.reset();
+        clearSignature();
+        setTimeout(() => status.innerText = "", 3000);
+      } else {
+        status.innerText = "❌ Submission Failed";
+        status.style.color = "red";
+      }
+    })
+    .catch(() => {
+      status.innerText = "❌ Network Error";
       status.style.color = "red";
-    }
-  })
-  .catch(() => {
-    status.innerText = "❌ Network Error";
-    status.style.color = "red";
-  });
+    });
 });
+
+/* ===============================
+   LOGOUT
+================================ */
+function logout() {
+  localStorage.clear();
+  location.href = "index.html";
+}
