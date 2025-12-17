@@ -1,9 +1,13 @@
 /* ===============================
    🔐 PAGE PROTECTION
 ================================ */
-if (localStorage.getItem("LOGGED_IN") !== "YES") {
-  window.location.replace("index.html");
+function requireLogin() {
+  if ((localStorage.getItem("LOGGED_IN") || "").toUpperCase() !== "YES") {
+    window.location.replace("index.html");
+  }
 }
+
+requireLogin();
 /* ===============================
    CONFIG
 ================================ */
