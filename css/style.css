@@ -233,8 +233,8 @@ canvas {
   content: "✔";
   position: absolute;
   top: -1px;
-  left: 1px;
-  font-size: 18px;
+  left: 0.5px;
+  font-size: 20px;
   color: #1976d2;
 }
 
