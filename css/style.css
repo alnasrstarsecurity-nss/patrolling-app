@@ -240,7 +240,6 @@ canvas {
   left: 2px;
   font-size: 18px;
   color: #1976d2;
-  background: white;
 }
 @media (max-width: 768px) {
   .form-container {
