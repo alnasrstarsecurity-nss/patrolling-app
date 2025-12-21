@@ -39,9 +39,20 @@ function radio(name) {
 ================================ */
 function toDDMMYYYY(dateValue) {
   if (!dateValue) return "";
-  const [y, m, d] = dateValue.split("-");
+
+  // normalize separator ( / or - )
+  const parts = dateValue.includes("/")
+    ? dateValue.split("/")
+    : dateValue.split("-");
+
+  // parts = [yyyy, mm, dd]
+  const y = parts[0];
+  const m = parts[1];
+  const d = parts[2];
+
   return `${d}/${m}/${y}`;
 }
+
 
 
 /* ===============================
