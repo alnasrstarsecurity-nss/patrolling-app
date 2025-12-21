@@ -35,6 +35,16 @@ function radio(name) {
 }
 
 /* ===============================
+   date format
+================================ */
+function toDDMMYYYY(dateValue) {
+  if (!dateValue) return "";
+  const [y, m, d] = dateValue.split("-");
+  return `${d}/${m}/${y}`;
+}
+
+
+/* ===============================
    SIGNATURE PAD (MOUSE + TOUCH)
 ================================ */
 const canvas = document.getElementById("sign");
