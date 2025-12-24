@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <input type="number" id="empno">
 
    <label>Location</label>
-  <select id="Location" required>
+  <select id="Location1" required>
   <option value="">-- Location --</option>  
   <option value="L1">L1</option>
   <option value="L2">L2</option>
@@ -78,12 +78,38 @@ document.addEventListener("DOMContentLoaded", () => {
   <option value="Shift3">Shift3</option>
   </select>
    </div>
-  
+
+  <div class="section">
+   <label>Exact Location of Incdent</label>
+  <textarea id="Location2"></textarea>
+    
   <label>Date</label>
   <input type="date" id="Date">
 
   <label for="time">Time</label>
   <input type="time" id="time">
+
+      <label>Type of Incident</label>
+  <select id="Type of Incident" required>
+  <option value="">-- Select Incident --</option>  
+  <option value="Medical Emergency">Medical Emergency</option>
+  <option value="Electrical Failure">Electrical Failure</option>
+  <option value="Fire/ Fire Alarm">Fire/ Fire Alarm</option>
+    <option value="Theft">Theft</option>
+    <option value="Lift Emergency">Lift Emergency</option>
+    <option value="Missing Person/ Items">Missing Person/ Items</option>
+    <option value="Scuffle">Scuffle</option>
+    <option value="Assault">Assault</option>
+    <option value="Vehicular Incident">Vehicular Incident</option>
+    <option value="Property Damaged">Property Damaged</option>
+    <option value="Fuel/ Chemical Spills">Fuel/ Chemical Spills</option>
+    <option value="Suspicious Activity">Suspicious Activity</option>
+    <option value="Crime">Crime</option>
+    <option value="Contravention">Contravention</option>
+    <option value="Others">Others</option>
+    
+    
+  </select>
   
  </div>
 
