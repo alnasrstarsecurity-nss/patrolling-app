@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <!-- Accommodation -->
 <div class="section">
-  <label><h3>Accommodation Name</h3></label>
+  <h3>Accommodation Name</h3>
   <select id="accName" required style="width:100%" required>
-  <option value="">-- Select Accommodation --</option>  
+  <option value=""></option>  
 <option value="Muntazah Plaza 140 A& B">Muntazah Plaza 140 A& B</option>
 <option value="QRIOC">QRIOC</option>
 <option value="QROC - Parking">QROC - Parking</option>
@@ -83,11 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
 <option value="Duhail 52">Duhail 52</option>
 <option value="Zenon 5">Zenon 5</option>
 </select>
-  <script>
+<script>
 $(document).ready(function() {
   $('#accName').select2({
     placeholder: "Search accommodation...",
-    allowClear: true
+    allowClear: true,
+    dropdownParent: $('.form-container')
   });
 });
 </script>
