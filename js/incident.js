@@ -146,18 +146,6 @@ form.addEventListener("submit", e => {
   status.innerText = "Submitting...";
   status.style.color = "blue";
 
-  /* ---- GUARD CAG COMBINATION ---- */
-  const guard1CAG = [
-    radio("g1_comm"),
-    radio("g1_awar"),
-    radio("g1_groom")
-  ].filter(Boolean).join(" ");
-
-  const guard2CAG = [
-    radio("g2_comm"),
-    radio("g2_awar"),
-    radio("g2_groom")
-  ].filter(Boolean).join(" ");
 
   /* ---- PAYLOAD (MATCHES APPS SCRIPT 100%) ---- */
   const payload = {
