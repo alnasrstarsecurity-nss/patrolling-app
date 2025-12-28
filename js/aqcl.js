@@ -61,7 +61,7 @@ function toDDMMYYYY(dateValue) {
 const canvas = document.getElementById("sign");
 const ctx = canvas.getContext("2d");
 
-const submitBtn = document.getElementById("status");
+const submitBtn = document.getElementById("submitBtn");
 let signed = false;
 
 // disable submit initially (safety)
