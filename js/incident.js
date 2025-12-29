@@ -148,7 +148,8 @@ const clearSupSignature = initSignaturePad("supSignPad");
 // Attach clear buttons
 window.clearWitnessSignature = clearWitnessSignature;
 window.clearSupSignature = clearSupSignature;
-
+signed = false;
+  submitBtn.disabled = true;
 
 /* ===============================
    FORM SUBMISSION
