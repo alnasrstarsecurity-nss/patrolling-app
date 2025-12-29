@@ -96,6 +96,10 @@ function getPos(e) {
 
 function startDraw(e) {
   e.preventDefault();
+
+   if (document.activeElement) {
+    document.activeElement.blur();
+  }
   drawing = true;
 
    signed = true;
