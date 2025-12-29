@@ -153,6 +153,9 @@ form.addEventListener("submit", e => {
   status.innerText = "Submitting...";
   status.style.color = "blue";
 
+ const attachmentTypes = Array.from(form.querySelectorAll('input[name="attachmentType"]:checked'))
+  .map(cb => cb.value)
+  .join(", "); 
 
   /* ---- PAYLOAD (MATCHES APPS SCRIPT 100%) ---- */
   const payload = {
