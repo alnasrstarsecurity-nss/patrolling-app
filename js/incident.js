@@ -187,9 +187,12 @@ form.addEventListener("submit", e => {
   };
 
   fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(payload)
-  })
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(payload)
+})
     .then(r => r.json())
     .then(res => {
       if (res.status === "success") {
