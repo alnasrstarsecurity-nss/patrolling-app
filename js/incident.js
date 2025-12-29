@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ===============================
    CONFIG
 ================================ */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxELlSWsaxSsJSyrJRg4zw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkGuDpLARWufW1NKPSOYzBqyEy3Yf5NdvhgIczb_pGIXIL03UZ-Kqg-PxafT3U4hVc8A/exec";
 
 const form = document.getElementById("incidentform");
 const status = document.getElementById("status");
@@ -153,7 +153,7 @@ form.addEventListener("submit", e => {
 
   /* ---- PAYLOAD (MATCHES APPS SCRIPT 100%) ---- */
   const payload = {
-    action: "submitINCIDENT",
+    action: "submitIncident",
 
       // Main info
       name: form.name.value,
