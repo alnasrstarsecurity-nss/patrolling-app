@@ -141,6 +141,9 @@ function clearSignature() {
   submitBtn.disabled = true;
 }
 
+  window.clearWitnessSignature = () => { witnessCanvas.getContext("2d").clearRect(0,0,witnessCanvas.width,witnessCanvas.height); };
+  window.clearSupSignature = () => { supCanvas.getContext("2d").clearRect(0,0,supCanvas.width,supCanvas.height); };
+
 /* ===============================
    FORM SUBMISSION
 ================================ */
