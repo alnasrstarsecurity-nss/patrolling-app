@@ -60,50 +60,32 @@ function toDDMMYYYY(dateValue) {
 /* ===============================
    SIGNATURE PAD (MOUSE + TOUCH)
 ================================ */
-const witnessCanvas = document.getElementById("witnessSignPad");
-const witnessCtx = witnessCanvas.getContext("2d");
+function initSignaturePad(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext("2d");
 
-const supCanvas = document.getElementById("supSignPad");
-const supCtx = supCanvas.getContext("2d");
+  // Make canvas internal size match CSS
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
 
-// Set line style
-[witnessCtx, supCtx].forEach(ctx => {
   ctx.lineWidth = 2.5;
   ctx.lineCap = "round";
-});
+  ctx.strokeStyle = "#000000"; // black color
 
-// Resize canvas to match CSS size
-function resizeCanvas(canvas, ctx) {
-  const style = getComputedStyle(canvas);
-  canvas.width = parseInt(style.width);
-  canvas.height = parseInt(style.height);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-// Initial resize
-resizeCanvas(witnessCanvas, witnessCtx);
-resizeCanvas(supCanvas, supCtx);
-
-// Resize on window change
-window.addEventListener("resize", () => {
-  resizeCanvas(witnessCanvas, witnessCtx);
-  resizeCanvas(supCanvas, supCtx);
-});
-
-function initSignaturePad(canvas, ctx) {
   let drawing = false;
 
   function getPos(e) {
-    const rect = canvas.getBoundingClientRect();
+    const r = canvas.getBoundingClientRect();
     if (e.touches) {
       return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top
+        x: e.touches[0].clientX - r.left,
+        y: e.touches[0].clientY - r.top
       };
     }
     return {
-      x: e.offsetX,
-      y: e.offsetY
+      x: e.clientX - r.left,
+      y: e.clientY - r.top
     };
   }
 
@@ -129,27 +111,29 @@ function initSignaturePad(canvas, ctx) {
     drawing = false;
   }
 
+  // Mouse events
   canvas.addEventListener("mousedown", startDraw);
   canvas.addEventListener("mousemove", draw);
   canvas.addEventListener("mouseup", endDraw);
   canvas.addEventListener("mouseleave", endDraw);
 
+  // Touch events
   canvas.addEventListener("touchstart", startDraw, { passive: false });
   canvas.addEventListener("touchmove", draw, { passive: false });
   canvas.addEventListener("touchend", endDraw);
+
+  // Clear function
+  return () => ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 // Initialize both pads
-initSignaturePad(witnessCanvas, witnessCtx);
-initSignaturePad(supCanvas, supCtx);
+const clearWitnessSignature = initSignaturePad("witnessSignPad");
+const clearSupSignature = initSignaturePad("supSignPad");
 
-// Clear buttons
-window.clearWitnessSignature = () => {
-  witnessCtx.clearRect(0, 0, witnessCanvas.width, witnessCanvas.height);
-};
-window.clearSupSignature = () => {
-  supCtx.clearRect(0, 0, supCanvas.width, supCanvas.height);
-};
+// Attach clear buttons
+window.clearWitnessSignature = clearWitnessSignature;
+window.clearSupSignature = clearSupSignature;
+
 
 /* ===============================
    FORM SUBMISSION
