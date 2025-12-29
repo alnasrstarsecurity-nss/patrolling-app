@@ -60,7 +60,6 @@ function toDDMMYYYY(dateValue) {
 /* ===============================
    SIGNATURE PAD (MOUSE + TOUCH)
 ================================ */
-// CANVASES & CONTEXTS
 const witnessCanvas = document.getElementById("witnessSignPad");
 const witnessCtx = witnessCanvas.getContext("2d");
 
@@ -68,45 +67,48 @@ const supCanvas = document.getElementById("supSignPad");
 const supCtx = supCanvas.getContext("2d");
 
 // Set line style
-witnessCtx.lineWidth = 2.5;
-witnessCtx.lineCap = "round";
-
-supCtx.lineWidth = 2.5;
-supCtx.lineCap = "round";
-
-// Resize canvases
-function resizeCanvas(canvas) {
-  const r = canvas.getBoundingClientRect();
-  canvas.width = r.width;
-  canvas.height = r.height;
-}
-
-resizeCanvas(witnessCanvas);
-resizeCanvas(supCanvas);
-
-window.addEventListener("resize", () => {
-  resizeCanvas(witnessCanvas);
-  resizeCanvas(supCanvas);
+[witnessCtx, supCtx].forEach(ctx => {
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = "round";
 });
 
-// Initialize signature pad
+// Resize canvas to match CSS size
+function resizeCanvas(canvas, ctx) {
+  const style = getComputedStyle(canvas);
+  canvas.width = parseInt(style.width);
+  canvas.height = parseInt(style.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Initial resize
+resizeCanvas(witnessCanvas, witnessCtx);
+resizeCanvas(supCanvas, supCtx);
+
+// Resize on window change
+window.addEventListener("resize", () => {
+  resizeCanvas(witnessCanvas, witnessCtx);
+  resizeCanvas(supCanvas, supCtx);
+});
+
 function initSignaturePad(canvas, ctx) {
   let drawing = false;
 
   function getPos(e) {
-    const r = canvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     if (e.touches) {
       return {
-        x: e.touches[0].clientX - r.left,
-        y: e.touches[0].clientY - r.top
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
       };
     }
-    return { x: e.offsetX, y: e.offsetY };
+    return {
+      x: e.offsetX,
+      y: e.offsetY
+    };
   }
 
   function startDraw(e) {
     e.preventDefault();
-    if (document.activeElement) document.activeElement.blur();
     drawing = true;
     const p = getPos(e);
     ctx.beginPath();
@@ -122,6 +124,7 @@ function initSignaturePad(canvas, ctx) {
   }
 
   function endDraw(e) {
+    if (!drawing) return;
     e.preventDefault();
     drawing = false;
   }
