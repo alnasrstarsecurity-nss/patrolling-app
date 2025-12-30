@@ -27,6 +27,10 @@
 </div>
 
 <script>
+if (localStorage.getItem("LOGGED_IN") === "YES") {
+  window.location.replace("menu.html");
+}
+  
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuRPXYnpKeL4IpdSVeUugvB4DPec_shsw0dQLuPHopo882l6AFUG6ZAqwWpNjWw-INUw/exec";
 
 const msg = document.getElementById("msg");
