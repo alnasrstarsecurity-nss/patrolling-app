@@ -20,10 +20,11 @@
 </head>
 <body>
 <script>
+/* 🔒 Block direct access without login */
 (function () {
-  if (localStorage.getItem("LOGGED_IN") !== "YES") {
-    window.location.replace("index.html");
-  }
+  if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
+  window.location.replace("index.html");
+}
 })();
 </script>
   
