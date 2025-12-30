@@ -21,12 +21,13 @@
 <body>
   
 <script>
-/* 🔒 Block direct access without login */
-(function () {
-  if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
-  window.location.replace("index.html");
-}
-})();
+document.addEventListener("DOMContentLoaded", function () {
+  const logged = sessionStorage.getItem("LOGGED_IN");
+
+  if (logged !== "YES") {
+    window.location.replace("index.html");
+  }
+});
 </script>
 
 
