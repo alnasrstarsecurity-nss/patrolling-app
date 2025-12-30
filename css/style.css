@@ -316,10 +316,10 @@ canvas {
   height: 18px;
 }
 
-.check label {
+.check-row label {
   display: inline-flex;
-  align-items: center;   /* keeps checkbox + text perfectly aligned */
-  gap: 6px;              /* small spacing */
-  cursor: pointer;
+  align-items: center;   /* aligns checkbox + text perfectly */
+  gap: 6px;              /* spacing between checkbox and text */
+  line-height: 1.4;
 }
 //incident form style 
