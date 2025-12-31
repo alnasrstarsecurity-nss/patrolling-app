@@ -1,10 +1,9 @@
 
-
 /* ===============================
    🔐 PAGE PROTECTION
 ================================ */
 function requireLogin() {
-  if ((localStorage.getItem("LOGGED_IN") || "").toUpperCase() !== "YES") {
+  if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
     window.location.replace("index.html");
   }
 }
