@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ===============================
    CONFIG
 ================================ */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxh71BkGlTgejlXe-TZ8Es3tvGoqZUsJYLpgDn7kAnYQwLM5_QUZc97L__H6Ch036Xx/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0WYv6owseLdZr_2dNZa0yFDwU8CkBZ2IVUIRfjF8vg5Upuf3rgZxQ-Tjd4KxWsd1W/exec";
 
 const form = document.getElementById("incidentform");
 const status = document.getElementById("status");
