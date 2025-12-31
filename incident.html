@@ -218,13 +218,13 @@ sessionStorage.clear();
 </button>-->
 
 </form>
-  <button type="button" onclick="goBackToMenu()">
+<button type="button" onclick="goBack()">
   ⬅ Back to Menu
 </button>
-</div>
+
 <script>
-function goBackToMenu() {
-  window.location.href = "menu.html";
+function goBack() {
+  window.history.back();
 }
 </script>
 
