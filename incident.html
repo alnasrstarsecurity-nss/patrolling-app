@@ -213,12 +213,20 @@ sessionStorage.clear();
 <button type="submit" id="submitBtn">Submit</button>
 <div id="status"></div>
 
-<button type="button" onclick="location.href='menu.html'">
+<!--<button type="button" onclick="location.href='menu.html'">
 ⬅ Back to Menu
-</button>
+</button>-->
 
 </form>
+  <button type="button" onclick="goBackToMenu()">
+  ⬅ Back to Menu
+</button>
 </div>
+<script>
+function goBackToMenu() {
+  window.location.href = "menu.html";
+}
+</script>
 
 <script src="js/incident.js"></script>
 </body>
