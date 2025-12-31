@@ -1,14 +1,14 @@
 
 /* ===============================
    🔐 PAGE PROTECTION
-================================ */
+================================ 
 function requireLogin() {
   if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
     window.location.replace("index.html");
   }
 }
 
-requireLogin();
+requireLogin();*/
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginState = localStorage.getItem("LOGGED_IN");
