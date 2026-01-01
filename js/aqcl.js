@@ -144,7 +144,7 @@ function initSignaturePad(canvasId) {
 }
 
 // Initialize ONE signature pad
-const clearAqclSignature = initSignaturePad("sign");
+const clearAqclSignature = initSignaturePad("sign", "submitBtn");
 
 // Expose clear button function if you have one
 window.clearAqclSignature = clearAqclSignature;
