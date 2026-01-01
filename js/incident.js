@@ -75,13 +75,14 @@ function blurActiveInputSafely() {
   }
 }
 
-
 /* ===============================
    SIGNATURE PAD (MOUSE + TOUCH)
 ================================ */
 function initSignaturePad(canvasId) {
   const canvas = document.getElementById(canvasId);
   const ctx = canvas.getContext("2d");
+
+    const submitBtn = document.getElementById("submitBtn");
 
   // Make canvas internal size match CSS
   const rect = canvas.getBoundingClientRect();
