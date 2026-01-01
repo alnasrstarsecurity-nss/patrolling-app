@@ -65,7 +65,12 @@ function toDDMMYYYY(dateValue) {
 function initSignaturePad(canvasId) {
   const canvas = document.getElementById(canvasId);
   const ctx = canvas.getContext("2d");
-
+   
+//disable sibmit button
+   const submitBtn = document.getElementById("submitBtn");
+   let signed = false;
+//disable sibmit button
+   
   // Match internal canvas size to CSS size (only once)
   const rect = canvas.getBoundingClientRect();
   canvas.width = rect.width;
@@ -94,6 +99,10 @@ function initSignaturePad(canvasId) {
   function startDraw(e) {
     e.preventDefault();
     drawing = true;
+
+      signed = true;
+      submitBtn.disabled = false;
+     
     const p = getPos(e);
     ctx.beginPath();
     ctx.moveTo(p.x, p.y);
@@ -125,7 +134,11 @@ function initSignaturePad(canvasId) {
   canvas.addEventListener("touchend", endDraw);
 
   // Clear function
-  return () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+  return () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  signed = false;
+  submitBtn.disabled = true;};
 }
 
 // Initialize ONE signature pad
