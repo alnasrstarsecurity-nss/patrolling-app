@@ -216,7 +216,7 @@ form.addEventListener("submit", e => {
         status.innerText = "✅ Submitted Successfully";
         status.style.color = "green";
         form.reset();
-        clearSignature();
+        clearAqclSignature();
         setTimeout(() => status.innerText = "", 3000);
       } else {
         status.innerText = "❌ Submission Failed";
