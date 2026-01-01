@@ -93,12 +93,11 @@ function initSignaturePad(canvasId) {
   ctx.lineWidth = 2.5;
   ctx.lineCap = "round";
   ctx.strokeStyle = "#000000"; // black color
-
+  let signed = false;
   let drawing = false;
   // signatur validation
-    if (options.required) {
-    submitBtn.disabled = true;
-  }
+    
+  
 //signature validation
    
   function getPos(e) {
@@ -121,9 +120,7 @@ function initSignaturePad(canvasId) {
     drawing = true;
     signed = true;
      //validation
-      if (options.required) {
-      submitBtn.disabled = false;
-    }
+     
      //validation
     const p = getPos(e);
     ctx.beginPath();
@@ -159,15 +156,13 @@ function initSignaturePad(canvasId) {
   return () => ctx.clearRect(0, 0, canvas.width, canvas.height);
 
    //validation
-    if (options.required) {
-      submitBtn.disabled = true;
-    }
+    
    //validation
 }
 
 // Initialize both pads
 const clearWitnessSignature = initSignaturePad("witnessSignPad");
-const clearSupSignature = initSignaturePad("supSignPad", { required: true });
+const clearSupSignature = initSignaturePad("supSignPad");
 
 // Attach clear buttons
 window.clearWitnessSignature = clearWitnessSignature;
