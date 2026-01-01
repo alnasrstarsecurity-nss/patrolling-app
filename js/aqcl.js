@@ -194,7 +194,7 @@ form.addEventListener("submit", e => {
     buildingSecurityName: buildingSecurityName.value,
     securityStaffNumber: securityStaffNumber.value,
 
-    signature: canvas.toDataURL(),
+    signature: document.getElementById("sign").toDataURL(),
     buildingLandline: buildingLandline.value,
     securityDutyMobile: securityDutyMobile.value
   };
