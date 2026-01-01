@@ -63,7 +63,7 @@ function toDDMMYYYY(dateValue) {
 
 /* ===============================
    SIGNATURE PAD (MOUSE + TOUCH)
-================================ */
+================================ 
 const canvas = document.getElementById("sign");
 resizeCanvasToDisplaySize(canvas);
 const ctx = canvas.getContext("2d");
@@ -145,6 +145,77 @@ function clearSignature() {
    signed = false;
   submitBtn.disabled = true;
 }
+*/
+/* NEW SIGNATURE CODE*/
+document.addEventListener("DOMContentLoaded", () => {
+
+  const canvas = document.getElementById("sign");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvasToDisplaySize(canvas) {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+  }
+
+  resizeCanvasToDisplaySize(canvas);
+
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = "round";
+
+  let drawing = false;
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    if (e.touches) {
+      return {
+        x: e.touches[0].clientX - r.left,
+        y: e.touches[0].clientY - r.top
+      };
+    }
+    return { x: e.offsetX, y: e.offsetY };
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    if (document.activeElement) document.activeElement.blur();
+    drawing = true;
+    signed = true;
+    submitBtn.disabled = false;
+
+    const p = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  }
+
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    const p = getPos(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  }
+
+  function endDraw(e) {
+    e.preventDefault();
+    drawing = false;
+  }
+
+  canvas.addEventListener("mousedown", startDraw);
+  canvas.addEventListener("mousemove", draw);
+  canvas.addEventListener("mouseup", endDraw);
+  canvas.addEventListener("mouseleave", endDraw);
+
+  canvas.addEventListener("touchstart", startDraw, { passive: false });
+  canvas.addEventListener("touchmove", draw, { passive: false });
+  canvas.addEventListener("touchend", endDraw);
+
+  window.clearSignature = function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    signed = false;
+    submitBtn.disabled = true;
+  };
+});
 
 /* ===============================
    FORM SUBMISSION
