@@ -8,7 +8,7 @@ function requireLogin() {
   }
 }
 
-requireLogin();*/
+requireLogin();
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginState = localStorage.getItem("LOGGED_IN");
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if ((loginState || "").toUpperCase() !== "YES") {
     window.location.replace("index.html");
   }
-});
+});*/
 
 /* ===============================
    CONFIG
