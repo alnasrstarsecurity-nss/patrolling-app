@@ -1,6 +1,6 @@
 /* ===============================
    🔐 PAGE PROTECTION
-================================ */
+================================ 
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if ((loginState || "").toUpperCase() !== "YES") {
     window.location.replace("index.html");
   }
-});
+});*/
 
 /* ===============================
    CONFIG
