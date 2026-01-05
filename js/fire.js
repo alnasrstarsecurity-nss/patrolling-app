@@ -7,40 +7,20 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGO6yvbwwxM-RqPxCXU
 const form = document.getElementById("fireForm");
 const status = document.getElementById("status");
 
+
 /* ===============================
-   RADIO HELPER
+    Helper — get radio
 ================================ */
 function radio(name) {
   const r = document.querySelector(`input[name="${name}"]:checked`);
   return r ? r.value : "";
 }
-/* ===============================
-   date format
-================================ */
-function toDDMMYYYY(dateValue) {
-  if (!dateValue) return "";
 
-  // normalize separator ( / or - )
-  const parts = dateValue.includes("/")
-    ? dateValue.split("/")
-    : dateValue.split("-");
+form.addEventListener("submit", e => {
+  e.preventDefault();
 
-  // parts = [yyyy, mm, dd]
-  const y = parts[0];
-  const m = parts[1];
-  const d = parts[2];
-
-  return `${d}/${m}/${y}`;
-}
-
-function blurActiveInputSafely() {
-  const el = document.activeElement;
-  if (!el) return;
-
-  if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
-    setTimeout(() => el.blur(), 0);
-  }
-}
+  status.innerText = "Submitting...";
+  status.style.color = "blue";
 
 /* ===============================
    FORM SUBMISSION
