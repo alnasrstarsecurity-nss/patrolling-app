@@ -1,5 +1,4 @@
-const FIRE_SCRIPT_URL =
-  "YOUR_WEB_APP_DEPLOY_URL_HERE"; // ← replace after deploying
+const FIRE_SCRIPT_URL ="https://script.google.com/macros/s/AKfycbxzSNQtdRTqtB60eTNfBIJ-jiIN5_7Dm5F4IYfP8Y9eHTqi-WZIoMYvdikNt_sOFLfdLA/exec";
 
 const form = document.getElementById("fireForm");
 const status = document.getElementById("status");
