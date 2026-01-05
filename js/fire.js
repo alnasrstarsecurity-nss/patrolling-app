@@ -1,19 +1,18 @@
-
-/* ===============================
-   CONFIG
-================================ */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGO6yvbwwxM-RqPxCXU9rkOj4P3sGVGOK-gtr1AHmFuMzex82lAWkyS2bdy2GKRj6dlQ/exec";
+const FIRE_SCRIPT_URL =
+  "YOUR_WEB_APP_DEPLOY_URL_HERE"; // ← replace after deploying
 
 const form = document.getElementById("fireForm");
 const status = document.getElementById("status");
 
-
-/* ===============================
-    Helper — get radio
-================================ */
 function radio(name) {
   const r = document.querySelector(`input[name="${name}"]:checked`);
   return r ? r.value : "";
+}
+
+function getCheckedValues(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)]
+    .map(c => c.value)
+    .join(", ");
 }
 
 form.addEventListener("submit", e => {
@@ -22,57 +21,65 @@ form.addEventListener("submit", e => {
   status.innerText = "Submitting...";
   status.style.color = "blue";
 
-/* ===============================
-   FORM SUBMISSION
-================================ */
-const payload = {
-    action: "submitFireReport",
+  // Build payload using EXACT SHEET COLUMN NAMES
+  const payload = {
+    "Timestamp": new Date().toLocaleString(),
+    "Building Name": BuildingName.value,
+    "Type of Incident": radio("TypeofInciden"),
+    "Evacuated": radio("guardPosition"),
+    "Date of Incident": Incidentdate.value,
+    "Incident Time": Incidenttime.value,
+    "Panel Reset Time": paneltime.value,
 
-    "Building Name": buildingName.value,
-    "Type of Incident": typeIncident.value,
-    "Evacuated": radio("evacuated"),
-    "Date of Incident": dateIncident.value,
-    "Incident Time": incidentTime.value,
-    "Panel Reset Time": resetTime.value,
-    "Alarm Activated In": alarmActivated.value,
-    "Other Area": otherArea.value,
-    "Occupant Name": occupantName.value,
-    "Occupant Nationality": occupantNationality.value,
-    "Floor No": floorNo.value,
-    "Flat No": flatNo.value,
-    "Staff Number": staffNumber.value,
-    "Department": department.value,
-    "Room No": roomNo.value,
-    "Occupant Was In": occupantWasIn.value,
-    "Exhaust Fan": radio("exhaustFan"),
-    "Kitchen Cooking Hood": radio("kitchenHood"),
-    "Kitchen Door": radio("kitchenDoor"),
-    "Fire Blanket Used": radio("fireBlanket"),
-    "Fire Extinguisher Used": radio("extinguisherUsed"),
-    "Type of Fire Extinguisher": typeExtinguisher.value,
-    "Civil Defense Present": radio("civilDefense"),
-    "CAMS Activated": radio("camsActivated"),
-    "Injury Reported by Occupant": radio("injuryReported"),
-    "Description of the Incident": descriptionIncident.value,
-    "Cause of the Incident": causeIncident.value,
-    "Property Damage": radio("propertyDamage"),
-    "Property Damage Specify": propertyDamageSpecify.value,
-    "Action Taken": actionTaken.value,
-    "Other Information": otherInformation.value,
-    "Guard Name": guardName.value,
-    "Guard Staff No": guardStaffNo.value,
-    "Company Name": companyName.value,
-    "Inform QR Facilities Staff": radio("informQR"),
-    "Staff Name": staffName.value,
-    "Meet the Occupant During The Incident": radio("meetOccupant"),
-    "Inform Cabin Crew Housing officer": radio("informHousing"),
-    "Housing Officer Visit the Site": radio("housingVisit"),
-    "Housing officer Name": housingOfficerName.value
+    "Alarm Activated In": getCheckedValues("AlarmActivated"),
+    "Other Area": Area.value,
+
+    "Occupant Name": OccupantName.value,
+    "Occupant Nationality": OccupantNationality.value,
+    "Floor No": FloorNo.value,
+    "Flat No": FlatNo.value,
+    "Staff Number": StaffNumber.value,
+    "Department": Department.value,
+    "Room No": RoomNo.value,
+
+    "Occupant Was In": getCheckedValues("OccupantWasIn"),
+
+    "Exhaust Fan": radio("ExhaustFan"),
+    "Kitchen Cooking Hood": radio("KitchenCookingHood"),
+    "Kitchen Door": radio("KitchenDoor"),
+    "Fire Blanket Used": radio("FireBlanket"),
+    "Fire Extinguisher Used": radio("FireExtinguisher"),
+
+    "Type of Fire Extinguisher": getCheckedValues("TypeFireExtinguisher"),
+
+    "Civil Defense Present": radio("Civil Defense"),
+    "CAMS Activated": radio("CAMS"),
+    "Injury Reported by Occupant": radio("Injury"),
+
+    "Description of the Incident": DescriptionIncident.value,
+    "Cause of the Incident": Cause.value,
+
+    "Property Damage": radio("Damage"),
+    "Property Damage Specify": SpecifyDamage.value,
+
+    "Action Taken": Actiontaken.value,
+    "Other Information": "",
+
+    "Guard Name": GuardName.value,
+    "Guard Staff No": StaffNo.value,
+    "Company Name": radio("Company"),
+
+    "Inform QR Facilities Staff": radio("InformQR"),
+    "Staff Name": QRStafName.value,
+
+    "Meet the Occupant During The Incident": radio("MeetOccupant"),
+
+    "Inform Cabin Crew Housing officer": radio("informCabinCrew"),
+    "Housing Officer Visit the Site": radio("housingofficerVisit"),
+    "Housing officer Name": HousingOfficerName.value
   };
 
-
-
-  fetch(SCRIPT_URL, {
+  fetch(FIRE_SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify(payload)
   })
@@ -88,17 +95,8 @@ const payload = {
         status.style.color = "red";
       }
     })
-    .catch(() => {
+    .catch(err => {
       status.innerText = "❌ Network Error";
       status.style.color = "red";
     });
 });
-
-
-/* ===============================
-   LOGOUT
-================================ */
-function logout() {
-  localStorage.clear();
-  location.href = "index.html";
-}
