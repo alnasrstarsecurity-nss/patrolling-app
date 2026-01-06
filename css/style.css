@@ -200,12 +200,11 @@ button.secondary {
   touch-action: none;
 }
 
-/*.section {
+.section {
   margin: 18px 0;
   padding: 12px;
   background: #fcf2f2;
-  border-left: 4px solid #660202;
-}*/
+}
 
 .section h3 {
   margin: 0 0 10px;
