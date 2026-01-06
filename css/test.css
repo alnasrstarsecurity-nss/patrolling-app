@@ -9,7 +9,7 @@ body {
 }
 
 .app {
-  max-width: 480px;
+  max-width: 1400px;   /* desktop width */
   margin: auto;
 }
 
