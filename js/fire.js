@@ -87,20 +87,29 @@ form.addEventListener("submit", e => {
     method: "POST",
     body: JSON.stringify(payload)
   })
-    .then(r => r.json())
-    .then(res => {
-      if (res.status === "success") {
-        status.innerText = "✅ Submitted Successfully";
-        status.style.color = "green";
-        form.reset();
-        setTimeout(() => status.innerText = "", 3500);
-      } else {
-        status.innerText = "❌ Submission Failed";
-        status.style.color = "red";
-      }
+  .then(res => {
+  if (res.status === "success") {
+    status.innerText = "✅ Submitted Successfully";
+    status.style.color = "green";
+
+    form.reset();
+
+    setTimeout(() => {
+      status.innerText = "";
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit";
+    }, 2500);
+  } else {
+  status.innerText = "❌ Submission Failed";
+  status.style.color = "red";
+  submitBtn.disabled = false;
+  submitBtn.innerText = "Submit";
+}
     })
     .catch(err => {
       status.innerText = "❌ Network Error";
       status.style.color = "red";
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit";
     });
 });
