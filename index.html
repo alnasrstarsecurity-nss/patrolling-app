@@ -65,7 +65,7 @@ function login() {
     })
   })
   .then(r => r.json())
-  .then(res => {
+  .then(res => { console.log("LOGIN RESPONSE:", res);
   if (res.status === "success") {
   sessionStorage.setItem("LOGGED_IN", "YES");
   sessionStorage.setItem("USERNAME", user.value);
