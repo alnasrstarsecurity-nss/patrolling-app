@@ -9,7 +9,7 @@ const status = document.getElementById("status");
 
 /* ===============================
    user full name
-================================ */
+================================ 
 const loginName = sessionStorage.getItem("LOGIN_NAME");
 
 if (!loginName) {
@@ -19,7 +19,7 @@ if (!loginName) {
 
 const supField = document.getElementById("patrollingSupervisor");
 supField.value = loginName;
-supField.readOnly = true; 
+supField.readOnly = true; */
 
 /* ===============================
    RADIO HELPER
