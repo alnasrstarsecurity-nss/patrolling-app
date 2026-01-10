@@ -32,58 +32,61 @@
 </div>
 
 <script>
-/*if (sessionStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "index.html";
-}*/
-
+if (sessionStorage.getItem("LOGGED_IN") === "YES") {
+  window.location.replace("menu.html");
+}
   
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUQL2tzAH48KLrXg5Zpdk_dWCMYrdAIBLFcHraX85E1Z9ZIgX1KQAvhhNTB-__ufWbTQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuRPXYnpKeL4IpdSVeUugvB4DPec_shsw0dQLuPHopo882l6AFUG6ZAqwWpNjWw-INUw/exec";
 
 const msg = document.getElementById("msg");
 const loginBtn = document.getElementById("loginBtn");
 
 loginBtn.addEventListener("click", login);
 
-
-async function login() {
- const username = document.getElementById("user").value.trim();
-const password = document.getElementById("pass").value.trim();
+function login() {
+  const username = user.value.trim();
+  const password = pass.value;
 
   if (!username || !password) {
-    alert("Enter username and password");
+    msg.innerText = "⚠️ Enter username and password";
+    msg.className = "message error";
     return;
   }
 
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        action: "login",
-        username: username,
-        password: password
-      })
-    });
+  msg.innerText = "Checking...";
+  msg.className = "message";
 
-    const result = await response.json();
-    console.log("Login response:", result); // 🔍 DEBUG
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "login",
+      username: username,
+      password: password   // plain password → hashed in Apps Script
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
+  if (res.status === "success") {
+  sessionStorage.setItem("LOGGED_IN", "YES");
+  sessionStorage.setItem("USERNAME", user.value);;
 
-    if (result.status === "success") {
-      sessionStorage.setItem("loggedIn", "true");
-      window.location.href = "incident.html";
-    } else {
-      alert("Invalid username or password");
-      sessionStorage.removeItem("loggedIn");
-    }
-
-  } catch (err) {
-    console.error("Login error:", err);
-    alert("Login failed. Check console.");
-  }
+  // 🔒 ensure storage is written before redirect
+  setTimeout(() => {
+    window.location.replace("menu.html");
+  }, 100);
 }
 
+  
+  else {
+      msg.innerText = "❌ Wrong username or password";
+      msg.className = "message error";
+    }
+  })
+  .catch(() => {
+    msg.innerText = "⚠️ Server error";
+    msg.className = "message error";
+  });
+}
 </script>
 
 </body>
