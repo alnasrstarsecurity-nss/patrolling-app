@@ -208,6 +208,7 @@ form.addEventListener("submit", async e => {
         status.innerText = "✅ Submitted Successfully";
         status.style.color = "green";
         form.reset();
+         submitBtn.disabled = false;
         clearWitnessSignature();
         clearSupSignature();
         setTimeout(() => status.innerText = "", 3000);
