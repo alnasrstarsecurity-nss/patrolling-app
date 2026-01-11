@@ -64,24 +64,20 @@ function login() {
       password: password   // plain password → hashed in Apps Script
     })
   })
-  .then(r => r.json())
   .then(res => {
+  console.log("LOGIN RESPONSE:", res);
+
   if (res.status === "success") {
-  sessionStorage.setItem("LOGGED_IN", "YES");
-  sessionStorage.setItem("USERNAME", user.value);;
+    sessionStorage.setItem("LOGGED_IN", "YES");
+    sessionStorage.setItem("USERNAME", username);
+    sessionStorage.setItem("LOGIN_NAME", res.name);
 
-  // 🔒 ensure storage is written before redirect
-  setTimeout(() => {
     window.location.replace("menu.html");
-  }, 100);
-}
-
-  
-  else {
-      msg.innerText = "❌ Wrong username or password";
-      msg.className = "message error";
-    }
-  })
+  } else {
+    msg.innerText = "❌ Wrong username or password";
+    msg.className = "message error";
+  }
+})
   .catch(() => {
     msg.innerText = "⚠️ Server error";
     msg.className = "message error";
