@@ -23,7 +23,7 @@ if (!loginName) {
 }
 
 // 🔹 Auto-fill supervisor name
-document.getElementById("patrollingSupervisor").value = loginName;
+document.getElementById("reportedBy").value = loginName;
 
 /* ===============================
    RADIO HELPER
