@@ -11,6 +11,7 @@ const status = document.getElementById("status");
    user full name
 ================================ */
 const loginName = sessionStorage.getItem("LOGIN_NAME");
+const qaidnumber = sessionStorage.getItem("QAID");
 
 if (!loginName) {
   alert("Session expired. Please login again.");
