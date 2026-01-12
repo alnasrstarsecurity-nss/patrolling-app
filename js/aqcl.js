@@ -20,6 +20,7 @@ if (!loginName) {
 
 // 🔹 Auto-fill supervisor name
 document.getElementById("patrollingSupervisor").value = loginName;
+document.getElementById("serialNumber").value = qaidnumber;
 
 /* ===============================
    RADIO HELPER
