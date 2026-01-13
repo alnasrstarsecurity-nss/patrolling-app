@@ -19,6 +19,23 @@ damageRadios.forEach(radio => {
   });
 });
 //specify damage
+//alarm activated mandatory
+const form = document.getElementById("fireForm");
+const alarmChecks = document.querySelectorAll('input[name="AlarmActivated"]');
+const alarmError = document.getElementById("alarmError");
+
+form.addEventListener("submit", function (e) {
+  const checked = [...alarmChecks].some(cb => cb.checked);
+
+  if (!checked) {
+    e.preventDefault();
+    alarmError.style.display = "block";
+    alarmChecks[0].focus();
+  } else {
+    alarmError.style.display = "none";
+  }
+});
+//alarm activated mandatory
 
 function radio(name) {
   const r = document.querySelector(`input[name="${name}"]:checked`);
