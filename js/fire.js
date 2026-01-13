@@ -24,10 +24,10 @@ const alarmChecks = document.querySelectorAll('input[name="AlarmActivated"]');
 const alarmError = document.getElementById("alarmError");
 
 form.addEventListener("submit", function (e) {
-  const checked = [...alarmChecks].some(cb => cb.checked);
+  const checked = Array.from(alarmChecks).some(cb => cb.checked);
 
   if (!checked) {
-    e.preventDefault();
+    e.preventDefault();          // ⛔ stop submit
     alarmError.style.display = "block";
     alarmChecks[0].focus();
   } else {
