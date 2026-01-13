@@ -20,6 +20,7 @@ damageRadios.forEach(radio => {
 });
 //specify damage
 //alarm activated mandatory
+// ✅ Alarm Activated – at least one required
 const alarmChecks = document.querySelectorAll('input[name="AlarmActivated"]');
 const alarmError = document.getElementById("alarmError");
 
@@ -27,9 +28,11 @@ form.addEventListener("submit", function (e) {
   const checked = Array.from(alarmChecks).some(cb => cb.checked);
 
   if (!checked) {
-    e.preventDefault();          // ⛔ stop submit
+    e.preventDefault();                 // stop submit
+    e.stopImmediatePropagation();       // ⛔ STOP other submit handlers
     alarmError.style.display = "block";
     alarmChecks[0].focus();
+    return;
   } else {
     alarmError.style.display = "none";
   }
