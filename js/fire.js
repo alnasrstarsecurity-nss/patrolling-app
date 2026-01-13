@@ -20,7 +20,6 @@ damageRadios.forEach(radio => {
 });
 //specify damage
 //alarm activated mandatory
-const form = document.getElementById("fireForm");
 const alarmChecks = document.querySelectorAll('input[name="AlarmActivated"]');
 const alarmError = document.getElementById("alarmError");
 
