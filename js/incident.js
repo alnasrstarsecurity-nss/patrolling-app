@@ -25,6 +25,21 @@ if (!loginName) {
 // 🔹 Auto-fill supervisor name
 document.getElementById("reportedBy").value = loginName;
 
+
+//other insident
+const incidentType = document.getElementById("incidentType");
+const otherIncident = document.getElementById("otherIncident");
+
+incidentType.addEventListener("change", function () {
+  if (this.value === "Others") {
+    otherIncident.required = true;
+    otherIncident.focus();
+  } else {
+    otherIncident.required = false;
+    otherIncident.value = ""; // clear if not needed
+  }
+});
+//other incident
 /* ===============================
    RADIO HELPER
 ================================ */
