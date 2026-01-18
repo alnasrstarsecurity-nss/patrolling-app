@@ -61,6 +61,24 @@ function fileToBase64(fileInput) {
   });
 }
 /* ===============================
+  10 image attachment HELPER
+================================ */
+async function filesToBase64(fileInput, maxFiles = 10) {
+  const files = Array.from(fileInput.files || []).slice(0, maxFiles);
+
+  const results = [];
+  for (const file of files) {
+    const base64 = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+    results.push(base64);
+  }
+  return results;
+}
+
+/* ===============================
    date format
 ================================ */
 function toDDMMYYYY(dateValue) {
@@ -214,7 +232,7 @@ form.addEventListener("submit", async e => {
     form.querySelectorAll('input[name="attachmentType"]:checked')
   ).map(c => c.value).join(", "),
 
-  attach1: await fileToBase64(form.attach1),
+  attach1: await filesToBase64(form.attach1, 10),
   attach2: await fileToBase64(form.attach2),
   attach3: await fileToBase64(form.attach3),
   attach4: await fileToBase64(form.attach4),
