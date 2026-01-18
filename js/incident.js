@@ -55,6 +55,36 @@ attach1Input.addEventListener("change", function () {
     attach1Error.textContent = "";
   }
 });
+
+const inputs = ["attach1","attach2","attach3","attach4"];
+
+inputs.forEach(id => {
+  const input = document.getElementById(id);
+  const drop = document.querySelector(`[data-for="${id}"]`);
+  const preview = document.getElementById(id+"-preview");
+  const info = document.getElementById(id+"-info");
+
+  drop.onclick = () => input.click();
+
+  input.onchange = () => {
+    const files = [...input.files];
+    preview.innerHTML = "";
+    info.innerHTML = files.length ? `${files.length} file(s) selected` : "";
+
+    files.forEach(f => {
+      if (f.type.startsWith("image/")) {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(f);
+        preview.appendChild(img);
+      } else {
+        const icon = document.createElement("div");
+        icon.className = "file-icon";
+        icon.innerHTML = "📄";
+        preview.appendChild(icon);
+      }
+    });
+  }
+});
 /* ===============================
    RADIO HELPER
 ================================ */
