@@ -57,35 +57,6 @@ attach1Input.addEventListener("change", function () {
 });
 
 //upload block
-let selectedFiles = [];
-
-const fileInput = document.getElementById("fileInput");
-const fileList = document.getElementById("fileList");
-const fileCount = document.getElementById("fileCount");
-
-fileInput.addEventListener("change", function(e) {
-  for (let f of [...e.target.files]) {
-    selectedFiles.push(f);
-  }
-  updateUI();
-  fileInput.value = ""; // allow re-upload same file
-});
-
-function updateUI() {
-  fileList.innerHTML = "";
-  selectedFiles.forEach((file, i) => {
-    const row = document.createElement("div");
-    row.className = "file-item";
-    row.innerHTML = `${file.name}<button onclick="removeFile(${i})">Delete</button>`;
-    fileList.appendChild(row);
-  });
-  fileCount.innerText = `${selectedFiles.length} file${selectedFiles.length !== 1 ? 's' : ''}`;
-}
-
-function removeFile(index) {
-  selectedFiles.splice(index, 1);
-  updateUI();
-}
 
 /* ===============================
    RADIO HELPER
