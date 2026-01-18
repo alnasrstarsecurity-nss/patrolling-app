@@ -56,9 +56,6 @@ attach1Input.addEventListener("change", function () {
   }
 });
 
-
-//upload block
-
 /* ===============================
    RADIO HELPER
 ================================ */
