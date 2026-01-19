@@ -150,7 +150,7 @@ form.addEventListener("submit", async e => {
     "Attachment 1": await filesToBase64(form.attach1, 10),
     "Attachment 2": await fileToBase64(form.attach2),
     "Attachment 3": await fileToBase64(form.attach3),
-    "Attachment 4": await fileToBase64(form.attach4)
+    "Attachment 4": await fileToBase64(form.attach4),
 
     "Guard Name": GuardName.value,
     "Guard Staff No": StaffNo.value,
