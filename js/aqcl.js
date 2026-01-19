@@ -62,6 +62,37 @@ attach1Input.addEventListener("change", function () {
 });
 
 /* ===============================
+   attachment HELPER
+================================ */
+function fileToBase64(fileInput) {
+  const file = fileInput.files[0];
+  return new Promise(resolve => {
+    if (!file) return resolve("");
+
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+/* ===============================
+  10 image attachment HELPER
+================================ */
+async function filesToBase64(fileInput, maxFiles = 10) {
+  const files = Array.from(fileInput.files || []).slice(0, maxFiles);
+
+  const results = [];
+  for (const file of files) {
+    const base64 = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+    results.push(base64);
+  }
+  return results;
+}
+
+/* ===============================
    date format
 ================================ */
 function toDDMMYYYY(dateValue) {
