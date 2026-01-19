@@ -140,6 +140,7 @@ form.addEventListener("submit", async e => {
 
     "Description of the Incident": DescriptionIncident.value,
     "Cause of the Incident": Cause.value,
+     "Other Incident":OtherIncident.value,
 
     "Property Damage": radio("Damage"),
     "Property Damage Specify": SpecifyDamage.value,
