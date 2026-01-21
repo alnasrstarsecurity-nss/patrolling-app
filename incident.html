@@ -95,7 +95,7 @@ if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
   </select>
 
    <label>Contact Number</label>
-  <input type="number" id="contact" name="contact" maxlength="11" required>
+  <input type="number" id="contact" name="contact" data-maxdigits="10" required>
 
    <label>Shift</label>
   <select id="shift" name="shift" required>
@@ -146,7 +146,7 @@ if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
   <input id="witnessName" name="witnessName">
 
    <label>Witness Contact Number</label>
-  <input type="number" id="witnessContact" name="witnessContact" data-maxdigits="6">
+  <input type="number" id="witnessContact" name="witnessContact" data-maxdigits="10">
 
   <label>Witness Signature</label>
   <canvas id="witnessSignPad" name="witnessSignPad"></canvas>
