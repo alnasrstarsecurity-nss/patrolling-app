@@ -54,7 +54,7 @@ if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
 
 
   <label>Employee Number</label>
-  <input type="number" id="empno" name="empno" data-maxdigits="6" required>
+  <input type="text" id="empno" name="empno" maxlength="7" required>
 
    <label>Location</label>
   <select id="location" name="location" required>
@@ -146,7 +146,7 @@ if (sessionStorage.getItem("LOGGED_IN") !== "YES") {
   <input id="witnessName" name="witnessName">
 
    <label>Witness Contact Number</label>
-  <input type="number" id="witnessContact" name="witnessContact">
+  <input type="number" id="witnessContact" name="witnessContact" data-maxdigits="6">
 
   <label>Witness Signature</label>
   <canvas id="witnessSignPad" name="witnessSignPad"></canvas>
