@@ -140,7 +140,7 @@ causeSelect.addEventListener("change", () => {
 const alarmChecks = document.querySelectorAll('input[name="AlarmActivated"]');
 const alarmError = document.getElementById("alarmError");
 
-form.addEventListener("submit", function (e) {
+/*form.addEventListener("submit", function (e) {
   e.preventDefault(); // ✅ ALWAYS STOP native submit
 
   const checked = Array.from(alarmChecks).some(cb => cb.checked);
@@ -152,7 +152,7 @@ form.addEventListener("submit", function (e) {
   } else {
     alarmError.style.display = "none";
   }
-});
+});*/
 //alarm activated mandatory
 
 function radio(name) {
@@ -168,6 +168,16 @@ function getCheckedValues(name) {
 
 form.addEventListener("submit", async e => {
   e.preventDefault();
+
+   // ✅ Alarm Activated validation (BLOCKS submission)
+  const checked = Array.from(alarmChecks).some(cb => cb.checked);
+  if (!checked) {
+    alarmError.style.display = "block";
+    alarmChecks[0].focus();
+    return; // ⛔ STOP EVERYTHING
+  } else {
+    alarmError.style.display = "none";
+  }
 
     submitBtn.disabled = true;
 
